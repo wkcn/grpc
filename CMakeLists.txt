@@ -322,3 +322,26 @@ target_link_libraries(grpc++_unsecure
   gpr
   grpc_unsecure
 )
+
+add_library(grpc_plugin_support
+  src/compiler/cpp_generator.cc
+)
+target_include_directories(grpc_plugin_support
+  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+add_executable(grpc_cpp_plugin
+  src/compiler/cpp_plugin.cc
+)
+
+target_include_directories(grpc_cpp_plugin
+  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
+  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
+  PRIVATE ${PROTOBUF_INCLUDE_DIRS}
+)
+
+target_link_libraries(grpc_cpp_plugin
+  ${PROTOBUF_PROTOC_LIBRARIES}
+  ${PROTOBUF_LIBRARIES}
+  grpc_plugin_support
+)
