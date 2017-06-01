@@ -341,7 +341,7 @@ target_include_directories(grpc_cpp_plugin
 )
 
 target_link_libraries(grpc_cpp_plugin
-  ${PROTOBUF_PROTOC_LIBRARIES}
+  ${PROTOC_LIBRARIES}
   ${PROTOBUF_LIBRARIES}
   grpc_plugin_support
 )
