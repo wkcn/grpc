@@ -55,7 +55,7 @@
 #include <time.h>
 #include <unistd.h>
 
-static long gettid(void) { return syscall(__NR_gettid); }
+static long local_gettid(void) { return syscall(__NR_gettid); }
 
 void gpr_log(const char *file, int line, gpr_log_severity severity,
              const char *format, ...) {
@@ -97,7 +97,7 @@ void gpr_default_log(gpr_log_func_args *args) {
 
   gpr_asprintf(&prefix, "%s%s.%09" PRId32 " %7ld %s:%d]",
                gpr_log_severity_string(args->severity), time_buffer,
-               now.tv_nsec, gettid(), display_file, args->line);
+               now.tv_nsec, local_gettid(), display_file, args->line);
 
   fprintf(stderr, "%-60s %s\n", prefix, args->message);
   gpr_free(prefix);
